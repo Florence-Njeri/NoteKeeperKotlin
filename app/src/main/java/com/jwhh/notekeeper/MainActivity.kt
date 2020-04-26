@@ -1,6 +1,7 @@
 package com.jwhh.notekeeper
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -29,7 +30,8 @@ class MainActivity : AppCompatActivity() {
         //Now associate the adapter with the spinner
         spinnerCourses.adapter = adapterCourses
 
-        notePosition = intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)
+        notePosition =savedInstanceState?.getInt(EXTRA_NOTE_POSITION, POSITION_NOT_SET) ?:
+                intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)
 
         if (notePosition != POSITION_NOT_SET) {
             displayNoteInfo()
@@ -103,4 +105,10 @@ class MainActivity : AppCompatActivity() {
                 note.text=textNoteText.text.toString()
         note.course=spinnerCourses.selectedItem as CourseInfo
     }
+
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState?.putInt(EXTRA_NOTE_POSITION,notePosition)
+    }
+
 }
