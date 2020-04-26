@@ -1,6 +1,6 @@
 package com.jwhh.notekeeper
 
-class CourseInfo(val courseId:String, val title:String) {
+data class CourseInfo(val courseId:String, val title:String) {
     //So only title form this CourseInfo class will be displayed in the Spinner
     override fun toString(): String {
         return title
@@ -8,5 +8,5 @@ class CourseInfo(val courseId:String, val title:String) {
     }
 }
 
-class NoteInfo(var course:CourseInfo, var title:String, var text:String)
+data class NoteInfo(var course:CourseInfo, var title:String, var text:String)
 

@@ -11,15 +11,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
-
+private var notePosition= POSITION_NOT_SET
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
        //Use an adapter to populate our spinner with courses from our DataManager class
-        val dm=DataManager()
-        var adapterCourses=ArrayAdapter<CourseInfo>(this,android.R.layout.simple_spinner_item,dm.courses.values.toList())
+
+        var adapterCourses=ArrayAdapter<CourseInfo>(this,android.R.layout.simple_spinner_item,DataManager.courses.values.toList())
 
         //DropDown for the spinner layout
         adapterCourses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -27,6 +27,23 @@ class MainActivity : AppCompatActivity() {
         //Now associate the adapter with the spinner
         spinnerCourses.adapter=adapterCourses
 
+        notePosition=intent.getIntExtra(EXTRA_NOTE_POSITION, POSITION_NOT_SET)
+
+        if(notePosition!= POSITION_NOT_SET){
+            displayNoteInfo()
+        }
+
+    }
+
+    private fun displayNoteInfo() {
+        var note=DataManager.notes[notePosition]
+
+        textNoteText.setText(note.text)
+        textNoteTitle.setText(note.title)
+
+        //Select appropriate note from the spinner
+        var coursesPosition=DataManager.courses.values.indexOf(note.course)
+        spinnerCourses.setSelection(coursesPosition)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
