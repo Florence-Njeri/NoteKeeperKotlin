@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         if (notePosition != POSITION_NOT_SET) {
             displayNoteInfo()
         }
+        else{
+           DataManager.notes.add(NoteInfo())
+            notePosition=DataManager.notes.lastIndex
+        }
 
     }
 
