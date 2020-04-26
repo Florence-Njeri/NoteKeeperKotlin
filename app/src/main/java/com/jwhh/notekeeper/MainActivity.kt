@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.SpinnerAdapter
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -84,5 +86,17 @@ class MainActivity : AppCompatActivity() {
 
 
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveNote()
+    }
+
+    private fun saveNote() {
+        val note=DataManager.notes[notePosition]
+        note.title=textNoteTitle.text.toString()
+                note.text=textNoteText.text.toString()
+        note.course=spinnerCourses.selectedItem as CourseInfo
     }
 }
